@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import Version from "./Version";
 
 export default function PanelAggregator() {
   const timeRef = useRef(null);
@@ -26,7 +27,7 @@ export default function PanelAggregator() {
   }, []);
 
   return <>
-    <p>RPTS </p>
+    <p>RPTS <Version /></p>
     <div className="flex-1 p-5">
       <div className="flex justify-between">
         <div>
