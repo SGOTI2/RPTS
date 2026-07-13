@@ -5,6 +5,7 @@ import './index.css'
 import NavbarWrapper from './NavbarWrapper';
 import Home from './Home';
 import PanelAggregator from './PanelAggregator';
+import './font.ts';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>

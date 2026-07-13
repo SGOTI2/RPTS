@@ -12,7 +12,7 @@ export default defineConfig({
     babel({ presets: [reactCompilerPreset()] })
   ],
   define: {
-    __BUILD_TIME__: JSON.stringify(new Date().toISOString()),
+    __BUILD_TIME__: JSON.stringify(new Date().getTime()),
     __GIT_HASH__: JSON.stringify(
       execSync("git rev-parse --short HEAD").toString().trim()
     ),

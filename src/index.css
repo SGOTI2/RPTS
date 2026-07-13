@@ -5,7 +5,7 @@ html {
 }
 
 body {
-  @apply bg-gray-800 text-white h-full;
+  @apply bg-gray-900 text-white h-full;
 }
 
 #root {
