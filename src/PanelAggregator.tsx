@@ -3,8 +3,8 @@ import Version from "./Version";
 import LivePanel from "./panel/LivePanel";
 
 export default function PanelAggregator() {
-  const timeRef = useRef(null);
-  const dateRef = useRef(null); // Because I'm up so late I'd figure it should refresh T_T
+  const timeRef = useRef<HTMLHeadingElement>(null);
+  const dateRef = useRef<HTMLHeadingElement>(null); // Because I'm up so late I'd figure it should refresh T_T
 
   useEffect(() => {
     function setTime() {
@@ -40,7 +40,8 @@ export default function PanelAggregator() {
           <h1 className="text-5xl">12</h1>
         </div>
       </div>
-      <div className="py-5">
+      <div className="py-5 flex overflow-x-scroll gap-5">
+        <LivePanel />
         <LivePanel />
       </div>
     </div>

@@ -6,16 +6,19 @@ import NavbarWrapper from './NavbarWrapper';
 import Home from './Home';
 import PanelAggregator from './PanelAggregator';
 import './font.ts';
+import { UnifiedStaticStateProvider } from './lib/unifiedStaticState.tsx';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <BrowserRouter>
-      <Routes>
-        <Route element={<NavbarWrapper />}>
-          <Route path="/" element={<Home />}/>
-        </Route>
-        <Route path="/livefeed" element={<PanelAggregator />}/>
-      </Routes>
-    </BrowserRouter>
+    <UnifiedStaticStateProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route element={<NavbarWrapper />}>
+            <Route path="/" element={<Home />}/>
+          </Route>
+          <Route path="/livefeed" element={<PanelAggregator />}/>
+        </Routes>
+      </BrowserRouter>
+    </UnifiedStaticStateProvider>
   </StrictMode>
 )
