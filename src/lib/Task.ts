@@ -24,5 +24,6 @@ export type Task = {
   priority: TaskPriority,
   part: number,
   qty: number,
-  due: Date
+  due: Date,
+  id: string
 };

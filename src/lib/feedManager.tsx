@@ -2,6 +2,8 @@ import { createContext, useState, type ReactNode } from "react";
 import type { Feed } from "./networking/types";
 import { produce } from "immer";
 import GetFullFeed from "./networking/getFullFeed";
+import subscribe from "./networking/subscribe";
+import type { Task } from "./Task";
 
 type ContextType = {
   feeds: {
@@ -29,6 +31,7 @@ export function FeedManagerProvider({ children }: { children: ReactNode }) {
   }
 
   async function acquireFeed(fscn: string) {
+    if (!fscn) return;
     if (Object.keys(feeds_).includes(fscn)) {
       if (feeds_[fscn].isAcquiring || feeds_[fscn].available) return;
       setFeed(fscn, {isAcquiring: true});
@@ -44,11 +47,18 @@ export function FeedManagerProvider({ children }: { children: ReactNode }) {
     
     const data = await GetFullFeed(fscn);
 
-    setFeed(fscn, {
-      data: data,
-      available: true,
-      isAcquiring: false
-    })
+    setFeeds_(produce((draft) => {
+      draft[fscn].data = data;
+      draft[fscn].available = true;
+      draft[fscn].isAcquiring = false;
+      draft[fscn].unsubscribe = subscribe(fscn, (newTask) => {
+        setFeeds_(produce((draft) => {
+          if (draft[fscn].data.findIndex((task: Task) => task.id == newTask.id) == -1) {
+            draft[fscn].data.push(newTask)
+          }
+        }))
+      })
+    }));
   }
 
   return (

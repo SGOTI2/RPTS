@@ -1,38 +1,17 @@
-import { useEffect, useRef } from "react";
+import { useContext, useEffect, useRef } from "react";
 import Version from "./Version";
 import LivePanel from "./panel/LivePanel";
+import { UnifiedStaticState } from "./lib/unifiedStaticState";
+import Time from "./Time";
 
 export default function PanelAggregator() {
-  const timeRef = useRef<HTMLHeadingElement>(null);
-  const dateRef = useRef<HTMLHeadingElement>(null); // Because I'm up so late I'd figure it should refresh T_T
-
-  useEffect(() => {
-    function setTime() {
-      if (!timeRef.current || !dateRef.current) return
-
-      const now = new Date();
-
-      timeRef.current.innerText = now.toLocaleTimeString(undefined);
-      dateRef.current.innerText = now.toLocaleDateString(undefined, {
-        weekday: "long",
-        year: "numeric",
-        month: "long",
-        day: "numeric",
-      })
-    }
-    setTime();
-
-    const intervalId = setInterval(setTime, 1000);
-
-    return () => clearInterval(intervalId);
-  }, []);
+  const unifiedStaticState = useContext(UnifiedStaticState);
 
   return (
     <div className="flex-1 pb-5">
       <div className="flex justify-even px-5">
         <div className="flex-1 pt-5">
-          <h3 className="text-xl" ref={dateRef}></h3>
-          <h1 className="text-5xl" ref={timeRef}></h1>
+          <Time />
         </div>
         <small className="flex-1 text-center text-gray-500 pt-1">RPTS <Version /></small>
         <div className="flex-1 text-right pt-5">
@@ -41,8 +20,9 @@ export default function PanelAggregator() {
         </div>
       </div>
       <div className="py-5 flex overflow-x-scroll gap-5 px-5">
-        <LivePanel />
-        <LivePanel />
+        {unifiedStaticState.fscn.map((fscn, i) => // TODO: Make it so ya can organzize this
+          <LivePanel fscn={fscn} key={i}/>
+        )}
       </div>
     </div>
   )

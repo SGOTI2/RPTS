@@ -10,7 +10,7 @@ import { UnifiedStaticState } from "../lib/unifiedStaticState";
 // DataKey represents the key in `task` that this cell represents
 export default function Cell({ task, dataKey }: { task: Task, dataKey: keyof Task }) {
   const { ref, overflowing, overflowingAmount } = useOverflow<HTMLTableCellElement>();
-  const unifiedStaticState = useContext(UnifiedStaticState)
+  const unifiedStaticState = useContext(UnifiedStaticState);
 
   return (
     <td 

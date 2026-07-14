@@ -1,92 +1,60 @@
-import { useContext, useEffect, useState } from "react";
-import { TaskPriority, TaskStatus, type Task } from "../lib/Task";
+import { useContext, useEffect, type ReactNode } from "react";
+import { type Task } from "../lib/Task";
 import Cell from "./Cell";
-import type { Feed } from "../lib/networking/types";
 import { FeedManager } from "../lib/feedManager";
+import { MdWarning } from "react-icons/md";
+import { UnifiedStaticState } from "../lib/unifiedStaticState";
 
-export default function LivePanel() {
+function LivePanelError({ children }: { children: ReactNode }) {
+  return (
+    <h6 className="h-full flex items-center justify-center text-red-500">
+      <MdWarning className="size-12 me-2"/>
+      {children}
+    </h6>
+  )
+}
+
+export default function LivePanel({ fscn }: { fscn: string }) {
+  const unifiedStaticState = useContext(UnifiedStaticState);
   const feedManager = useContext(FeedManager)
-
-  const [tasks, setTasks] = useState<Task[]>([
-    {
-      status: TaskStatus.Done,
-      name: "Lil Lil Lil Lil Lil LilLil",
-      subteam: 0,
-      priority: TaskPriority.High,
-      part: 2,
-      qty: 1,
-      due: new Date(2026, 6, 13, 22, 30)
-    },
-    {
-      status: TaskStatus.InProgress,
-      name: "Lil Lil Lil Lil Lil LilLil",
-      subteam: 1,
-      priority: TaskPriority.Low,
-      part: 5,
-      qty: 2,
-      due: new Date(2026, 6, 13, 22, 30)
-    },
-    {
-      status: TaskStatus.NotStarted,
-      name: "Lil Lil Lil Lil Lil LilLil",
-      subteam: 2,
-      priority: TaskPriority.Medium,
-      part: 8,
-      qty: 1,
-      due: new Date(2026, 6, 13, 22, 30)
-    },
-    {
-      status: TaskStatus.Waiting,
-      name: "Lil Lil Lil Lil Lil LilLil",
-      subteam: 3,
-      priority: TaskPriority.Low,
-      part: 9,
-      qty: 1,
-      due: new Date(2026, 6, 13, 23, 0)
-    },
-    {
-      status: TaskStatus.Outdated,
-      name: "Lil Lil Lil Lil Lil LilLil",
-      subteam: 3,
-      priority: TaskPriority.Low,
-      part: 12,
-      qty: 1,
-      due: new Date()
-    }
-  ]);
 
   useEffect((() => {
     (async () => {
-      await feedManager.acquireFeed("CNC")
+      await feedManager.acquireFeed(fscn)
     })();
   }), [feedManager])
 
   return (
     <div
-      className="rounded border border-gray-700 bg-gray-800 py-5 px-4 min-w-3xl h-92 shadow-[6px_6px_0px] shadow-gray-950/25"
+      className="rounded border border-gray-700 bg-gray-800 py-5 px-4 min-w-3xl h-92 shadow-[6px_6px_0px] shadow-gray-950/25 inline-flex flex-col"
       style={{ fontFamily: "JetBrains Mono" }}
     >
-      <h4 className="text-3xl pb-4 font-bold">CNC</h4>
-      <table className="w-full text-left table-fixed">
-        <thead className="table-header-group h-8">
-          <th className="border border-gray-700 py-1 ps-2 w-32">Status</th>
-          <th className="border border-gray-700 py-1 ps-2">Name</th>
-          <th className="border border-gray-700 py-1 ps-2">Subteam</th>
-          <th className="border border-gray-700 py-1 ps-2 w-24">Priority</th>
-          <th className="border border-gray-700 py-1 ps-2 w-14">Part</th>
-          <th className="border border-gray-700 py-1 ps-2 w-12">QTY</th>
-          <th className="border border-gray-700 py-1 ps-2">Due</th>
-        </thead>
-        <tbody>
-          {tasks.map((task, taskIndex) => (
-            <tr className="leading-none overflow-hidden h-4" key={taskIndex}>
-              {(Object.keys(task) as Array<keyof Task>).map((dataKey) => 
-                <Cell task={task} dataKey={dataKey} key={taskIndex+dataKey} />
-              )}
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      <h4 className="text-3xl font-bold">{unifiedStaticState.fscnMapping[fscn]}</h4>
+      {(!feedManager.feeds[fscn]            && (<LivePanelError>FSCN "{fscn}" does not have a feed in feedManager</LivePanelError>)) ||
+       (feedManager.feeds[fscn].isAcquiring && (<LivePanelError>Acquiring Live Feed</LivePanelError>)) ||
+       (!feedManager.feeds[fscn].available  && (<LivePanelError>Feed Unavilable - Not attempting to connect</LivePanelError>)) ||
+       (feedManager.feeds[fscn].data.length == 0 && (<h6 className="h-full flex items-center justify-center text-gray-500">No Parts</h6>)) ||
+        <table className="w-full text-left table-fixed pt-4">
+          <thead className="table-header-group h-8">
+            <th className="border border-gray-700 py-1 ps-2 w-32">Status</th>
+            <th className="border border-gray-700 py-1 ps-2">Name</th>
+            <th className="border border-gray-700 py-1 ps-2">Subteam</th>
+            <th className="border border-gray-700 py-1 ps-2 w-24">Priority</th>
+            <th className="border border-gray-700 py-1 ps-2 w-14">Part</th>
+            <th className="border border-gray-700 py-1 ps-2 w-12">QTY</th>
+            <th className="border border-gray-700 py-1 ps-2">Due</th>
+          </thead>
+          <tbody>
+            {((feedManager.feeds[fscn]?.data ?? []) as Task[]).map((task, taskIndex) => (
+              <tr className="leading-none overflow-hidden h-4" key={taskIndex}>
+                {(Object.keys(task) as Array<keyof Task>).filter((k) => k != "id").map((dataKey) => 
+                  <Cell task={task} dataKey={dataKey} key={taskIndex+dataKey} />
+                )}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      }
       <div/>
     </div>
   )
