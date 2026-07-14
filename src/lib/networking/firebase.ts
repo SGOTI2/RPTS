@@ -1,4 +1,4 @@
-import config from "@netConfig";
+import config from "@staticConfig";
 import { initializeApp } from "firebase/app";
 import { CACHE_SIZE_UNLIMITED, disableNetwork, enableNetwork, initializeFirestore, persistentLocalCache } from "firebase/firestore";
 

@@ -159,7 +159,7 @@ export default function TaskAdder() {
 
         <div>
           <label className={labelStyle}>
-            Machine
+            Manufacturer
           </label>
           <select
             className={inputStyle}

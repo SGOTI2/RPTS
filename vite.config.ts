@@ -14,7 +14,7 @@ const configFile = existsSync(resolve("config.local.ts"))
 export default defineConfig({
   resolve: {
     alias: {
-      "@netConfig": configFile
+      "@staticConfig": configFile
     }
   },
   plugins: [

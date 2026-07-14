@@ -9,7 +9,7 @@ export default function PanelAggregator() {
   const unifiedStaticState = useContext(UnifiedStaticState);
 
   return (
-    <div className="flex-1 pb-5">
+    <div className="flex-1 pb-5 flex flex-col h-dvh">
       <div className="flex justify-even px-5">
         <div className="flex-1 pt-5">
           <Time />
@@ -20,7 +20,7 @@ export default function PanelAggregator() {
           <PartCounter />
         </div>
       </div>
-      <div className="py-5 flex overflow-x-scroll gap-5 px-5">
+      <div className="flex-1 py-5 gap-5 px-5 grid xl:grid-cols-2 grid-cols-1 overflow-scroll h-full">
         {unifiedStaticState.fscn.map((fscn, i) => // TODO: Make it so ya can organzize this
           <LivePanel fscn={fscn} key={i}/>
         )}
