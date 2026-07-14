@@ -1,8 +1,9 @@
-import { useContext, useEffect, useRef } from "react";
-import Version from "./Version";
-import LivePanel from "./panel/LivePanel";
-import { UnifiedStaticState } from "./lib/unifiedStaticState";
+import { useContext } from "react";
+import Version from "../Version";
+import LivePanel from "./LivePanel";
+import { UnifiedStaticState } from "../lib/unifiedStaticState";
 import Time from "./Time";
+import PartCounter from "./PartCounter";
 
 export default function PanelAggregator() {
   const unifiedStaticState = useContext(UnifiedStaticState);
@@ -15,8 +16,8 @@ export default function PanelAggregator() {
         </div>
         <small className="flex-1 text-center text-gray-500 pt-1">RPTS <Version /></small>
         <div className="flex-1 text-right pt-5">
-          <h3 className="text-xl">Parts left</h3>
-          <h1 className="text-5xl">12</h1>
+          <h3 className="text-xl">Parts</h3>
+          <PartCounter />
         </div>
       </div>
       <div className="py-5 flex overflow-x-scroll gap-5 px-5">

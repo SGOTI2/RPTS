@@ -4,11 +4,12 @@ import { BrowserRouter, Routes, Route } from "react-router";
 import './index.css'
 import NavbarWrapper from './NavbarWrapper';
 import Home from './Home';
-import PanelAggregator from './PanelAggregator';
+import PanelAggregator from './panel/PanelAggregator';
 import './font.ts';
 import { UnifiedStaticStateProvider } from './lib/unifiedStaticState.tsx';
 import { isValidated } from './lib/networking/firebase.ts';
 import { FeedManagerProvider } from './lib/feedManager.tsx';
+import TaskAdder from './TaskAdder.tsx';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
@@ -19,6 +20,7 @@ createRoot(document.getElementById('root')!).render(
             <Routes>
               <Route element={<NavbarWrapper />}>
                 <Route path="/" element={<Home />}/>
+                <Route path="/addTask" element={<TaskAdder />}/>
               </Route>
               <Route path="/livefeed" element={<PanelAggregator />}/>
             </Routes>
