@@ -13,5 +13,8 @@ export function pseudoEnumName(value: any, object: object) {
 
 export function dayOf(date: Date) {
   date.setMilliseconds(0)
-  console.log(date)
+  date.setSeconds(0)
+  date.setMinutes(0)
+  date.setHours(0)
+  return date
 }

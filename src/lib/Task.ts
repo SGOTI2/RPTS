@@ -19,6 +19,7 @@ export type TaskPriority = (typeof TaskPriority)[keyof typeof TaskPriority];
 
 export type Task = {
   status: TaskStatus,
+  name: string
   subteam: number,
   priority: TaskPriority,
   part: number,

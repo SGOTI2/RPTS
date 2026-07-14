@@ -28,8 +28,8 @@ export default function PanelAggregator() {
   }, []);
 
   return (
-    <div className="flex-1 px-5 pb-5">
-      <div className="flex justify-even">
+    <div className="flex-1 pb-5">
+      <div className="flex justify-even px-5">
         <div className="flex-1 pt-5">
           <h3 className="text-xl" ref={dateRef}></h3>
           <h1 className="text-5xl" ref={timeRef}></h1>
@@ -40,7 +40,7 @@ export default function PanelAggregator() {
           <h1 className="text-5xl">12</h1>
         </div>
       </div>
-      <div className="py-5 flex overflow-x-scroll gap-5">
+      <div className="py-5 flex overflow-x-scroll gap-5 px-5">
         <LivePanel />
         <LivePanel />
       </div>
