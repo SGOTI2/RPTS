@@ -1,11 +1,8 @@
-import Input from "./form/input";
-
 import React, { useContext, useState } from "react";
 import { TaskPriority, TaskStatus } from "./lib/Task";
 import { separateByCamelCase } from "./lib/util";
 import { UnifiedStaticState } from "./lib/unifiedStaticState";
 import { produce } from "immer";
-import { redirect } from "react-router";
 import type { TaskData } from "./lib/networking/sendTask";
 import sendTask from "./lib/networking/sendTask";
 import { Timestamp } from "firebase/firestore";
@@ -130,55 +127,11 @@ export default function TaskAdder() {
 
   return (
     <div className="flex-1 p-5">
-      <h2 className="mb-6 text-2xl font-semibold">
-        Task Adder
+      <h2 className="mb-6 text-3xl font-bold tracking-wide">
+        Task Adder 2000
       </h2>
 
-      <form onSubmit={handleSubmit} className="flex flex-col gap-3">
-        <div>
-          <label className={labelStyle}>
-            Status
-          </label>
-          <select
-            className={inputStyle}
-            value={form.status}
-            onChange={(e) =>
-              updateField("status", Number(e.target.value))
-            }
-          >
-            <option value={-1}>Select...</option>
-
-            {statusOptions.map((option, index) => (
-              <option key={option} value={index}>
-                {option}
-              </option>
-            ))}
-          </select>
-          {errorText("status")}
-        </div>
-
-        <div>
-          <label className={labelStyle}>
-            Manufacturer
-          </label>
-          <select
-            className={inputStyle}
-            value={form.fscn}
-            onChange={(e) =>
-              updateField("fscn", e.target.value)
-            }
-          >
-            <option value={""}>Select...</option>
-
-            {Object.entries(unifiedStaticState.fscnMapping).map((option) => (
-              <option key={option[0]} value={option[0]}>
-                {option[1]}
-              </option>
-            ))}
-          </select>
-          {errorText("subteam")}
-        </div>
-
+      <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3">
         <div>
           <label className={labelStyle}>
             Name
@@ -191,50 +144,6 @@ export default function TaskAdder() {
             }
           />
           {errorText("name")}
-        </div>
-
-        <div>
-          <label className={labelStyle}>
-            Subteam
-          </label>
-          <select
-            className={inputStyle}
-            value={form.subteam}
-            onChange={(e) =>
-              updateField("subteam", Number(e.target.value))
-            }
-          >
-            <option value={-1}>Select...</option>
-
-            {Object.entries(unifiedStaticState.subteamMapping).map((option) => (
-              <option key={option[0]} value={option[0]}>
-                {option[1]}
-              </option>
-            ))}
-          </select>
-          {errorText("subteam")}
-        </div>
-
-        <div>
-          <label className={labelStyle}>
-            Priority
-          </label>
-          <select
-            className={inputStyle}
-            value={form.priority}
-            onChange={(e) =>
-              updateField("priority", Number(e.target.value))
-            }
-          >
-            <option value={-1}>Select...</option>
-
-            {priorityOptions.map((option, index) => (
-              <option key={option} value={index}>
-                {option}
-              </option>
-            ))}
-          </select>
-          {errorText("priority")}
         </div>
 
         <div>
@@ -265,6 +174,90 @@ export default function TaskAdder() {
             }
           />
           {errorText("qty")}
+        </div>
+
+        <div>
+          <label className={labelStyle}>
+            Manufacturer
+          </label>
+          <select
+            className={inputStyle}
+            value={form.fscn}
+            onChange={(e) =>
+              updateField("fscn", e.target.value)
+            }
+          >
+            <option value={""}>Select...</option>
+
+            {Object.entries(unifiedStaticState.fscnMapping).map((option) => (
+              <option key={option[0]} value={option[0]}>
+                {option[1]}
+              </option>
+            ))}
+          </select>
+          {errorText("fscn")}
+        </div>
+
+        <div>
+          <label className={labelStyle}>
+            Subteam
+          </label>
+          <select
+            className={inputStyle}
+            value={form.subteam}
+            onChange={(e) =>
+              updateField("subteam", Number(e.target.value))
+            }
+          >
+            <option value={-1}>Select...</option>
+
+            {Object.entries(unifiedStaticState.subteamMapping).map((option) => (
+              <option key={option[0]} value={option[0]}>
+                {option[1]}
+              </option>
+            ))}
+          </select>
+          {errorText("subteam")}
+        </div>
+
+        <div>
+          <label className={labelStyle}>
+            Status
+          </label>
+          <select
+            className={inputStyle}
+            value={form.status}
+            onChange={(e) =>
+              updateField("status", Number(e.target.value))
+            }
+          >
+            {statusOptions.map((option, index) => (
+              <option key={option} value={index}>
+                {option}
+              </option>
+            ))}
+          </select>
+          {errorText("status")}
+        </div>
+
+        <div>
+          <label className={labelStyle}>
+            Priority
+          </label>
+          <select
+            className={inputStyle}
+            value={form.priority}
+            onChange={(e) =>
+              updateField("priority", Number(e.target.value))
+            }
+          >
+            {priorityOptions.map((option, index) => (
+              <option key={option} value={index}>
+                {option}
+              </option>
+            ))}
+          </select>
+          {errorText("priority")}
         </div>
 
         <div>

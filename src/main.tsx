@@ -10,22 +10,29 @@ import { UnifiedStaticStateProvider } from './lib/unifiedStaticState.tsx';
 import { isValidated } from './lib/networking/firebase.ts';
 import { FeedManagerProvider } from './lib/feedManager.tsx';
 import TaskAdder from './TaskAdder.tsx';
+import NotFound from './NotFound.tsx';
+import AuthWrapper from './auth/AuthWrapper.tsx';
+import Account from './Account.tsx';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     {isValidated ? (
       <UnifiedStaticStateProvider>
-        <FeedManagerProvider>
-          <BrowserRouter>
-            <Routes>
-              <Route element={<NavbarWrapper />}>
+        <AuthWrapper>
+          <FeedManagerProvider>
+            <BrowserRouter>
+              <Routes>
+                <Route path='*' element={<NotFound />} />
+                <Route element={<NavbarWrapper />}>
+                  <Route path="/addTask" element={<TaskAdder />}/>
+                  <Route path="/account" element={<Account />}/>
+                </Route>
                 <Route path="/" element={<Home />}/>
-                <Route path="/addTask" element={<TaskAdder />}/>
-              </Route>
-              <Route path="/livefeed" element={<PanelAggregator />}/>
-            </Routes>
-          </BrowserRouter>
-        </FeedManagerProvider>
+                <Route path="/livefeed" element={<PanelAggregator />}/>
+              </Routes>
+            </BrowserRouter>
+          </FeedManagerProvider>
+        </AuthWrapper>
       </UnifiedStaticStateProvider>
     ) : (
       <h1 className="m-auto text-3xl p-32 leading-8">

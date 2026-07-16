@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import "@firebase-oss/ui-styles/tailwind";
 
 html {
   @apply h-full;
