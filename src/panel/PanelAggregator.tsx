@@ -12,18 +12,22 @@ export default function PanelAggregator() {
   const authContext = useContext(AuthContext);
   const unifiedStaticState = useContext(UnifiedStaticState);
 
-  if (true) {
+  const _401 = !authContext.user;
+  const _403 = authContext.user && (!authContext.feedAllow || !authContext.isAllowedThisDevice);
+
+  if (_401 || _403) {
     return (
       <div className="flex-1 h-full flex items-center justify-center">
       <div>
-        <div className="flex">
-          <h1 className="text-6xl font-bold tracking-wider">401</h1>
+        <div className="flex gap-2">
+          <h1 className="text-6xl font-bold tracking-wider">{_401 ? "401" : "403"}</h1>
           <div className="flex flex-col justify-between mt-1">
-            <h2 className="text-xl inline-block align-bottom">Unauthorized</h2>
+            <h2 className="text-xl inline-block align-bottom">{_401 ? "Unauthorized" : "Forbidden"}</h2>
             <hr className="border-gray-500"/>
             <Link to={"/"} className="text-blue-400">Return Home</Link>
           </div>
         </div>
+        {_403 && authContext.feedAllow && <p className="pt-3">This <u className="decoration-wavy decoration-1 underline-offset-4 decoration-red-500">device</u> is not allowed to view the live feed</p>}
         <p className="flex flex-col text-xs text-gray-500 mt-3">
           Authority:
           <small className="text-xs text-gray-500">{authContext.user?.uid ?? "Not logged in"}</small>
@@ -40,7 +44,9 @@ export default function PanelAggregator() {
         <div className="flex-1 pt-5">
           <Time />
         </div>
-        <small className="flex-1 text-center text-gray-500 pt-1">RPTS <Version /></small>
+        <small className="flex-1 text-center text-gray-500 pt-1">
+          RPTS <Version />
+        </small>
         <div className="flex-1 text-right pt-5">
           <h3 className="text-xl">Parts</h3>
           <PartCounter />

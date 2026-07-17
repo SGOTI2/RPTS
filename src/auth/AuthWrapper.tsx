@@ -4,10 +4,14 @@ import ui from "./ui";
 import { browserLocalPersistence, getAuth, setPersistence, type User } from "firebase/auth";
 import { app } from "../lib/networking/firebase";
 import "./Fingerprinting"
+import { getUserData } from "../lib/networking/getUserData";
+import { fingerprint } from "./Fingerprinting";
 
 type ContextType = {
   user?: User,
-  setUser: (user: User | undefined) => void
+  setUser: (user: User | undefined) => void,
+  feedAllow?: boolean,
+  isAllowedThisDevice?: boolean
 }
 
 const providerlessContext: ContextType = {setUser: () => {}}
@@ -19,20 +23,29 @@ if (Auth) {
   console.log(Auth.currentUser)
 }
 
-
 export function AuthProvider({ children }: { children: ReactNode }) {
-  const [user, setUser] = useState(Auth?.currentUser ?? undefined);
+  const [user, setUser] = useState<User | undefined>(Auth?.currentUser ?? undefined);
+  const [feedAllow, setFeedAllow] = useState<boolean | undefined>(undefined);
+  const [isAllowedThisDevice, setAllowedOnThisDevice] = useState<boolean | undefined>(undefined);
 
   useEffect(() => {
     Auth?.onAuthStateChanged((user) => {
       setUser(user ?? undefined);
+      if (user) {
+        getUserData(user.uid).then((userData) => {
+          setFeedAllow(userData?.feedAllow);
+          setAllowedOnThisDevice(userData?.allowedDevices.indexOf(fingerprint) != -1);
+        })
+      }
     })
   }, [])
 
   return (
     <AuthContext value={{
       user: user,
-      setUser: setUser
+      setUser: setUser,
+      feedAllow: feedAllow,
+      isAllowedThisDevice: isAllowedThisDevice
     }}>
       {children}
     </AuthContext>
