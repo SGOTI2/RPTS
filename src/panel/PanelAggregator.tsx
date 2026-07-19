@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import Version from "../Version";
+import Version, { obfuscate } from "../Version";
 import LivePanel from "./LivePanel";
 import { UnifiedStaticState } from "../lib/unifiedStaticState";
 import Time from "./Time";
@@ -31,7 +31,7 @@ export default function PanelAggregator() {
         <p className="flex flex-col text-xs text-gray-500 mt-3">
           Authority:
           <small className="text-xs text-gray-500">{authContext.user?.uid ?? "Not logged in"}</small>
-          <small className="text-xs text-gray-500">{fingerprint}</small>
+          <small className="text-xs text-gray-500">{obfuscate(fingerprint)}</small>
         </p>
       </div>
     </div>
