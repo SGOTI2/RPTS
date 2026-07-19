@@ -2,7 +2,6 @@ import { doc, getDocFromCache, getDocFromServer } from "firebase/firestore";
 import { db } from "./firebase";
 
 export type UserData = {
-  feedAllow: boolean,
   allowedDevices: string[]
 }
 

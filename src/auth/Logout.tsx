@@ -17,7 +17,8 @@ export default function Logout() {
             setWorking(false);
           })
         }}
-          className="w-fit">
+          className="w-fit"
+          disabled={working}>
           {working ? "Working" : "Logout"}
         </Button>
     </div>
