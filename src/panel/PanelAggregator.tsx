@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import Version, { obfuscate } from "../Version";
+import Version, { obfuscate } from "./Version";
 import LivePanel from "./LivePanel";
 import { UnifiedStaticState } from "../lib/unifiedStaticState";
 import Time from "./Time";
@@ -13,7 +13,7 @@ export default function PanelAggregator() {
   const unifiedStaticState = useContext(UnifiedStaticState);
 
   const _401 = !authContext.user;
-  const _403 = authContext.user && (!authContext.claims?.feedAllow || !authContext.claims?.verified);
+  const _403 = authContext.user && (!authContext.claims?.feedAllow || !authContext.claims?.verified || !authContext.isAllowedThisDevice);
 
   if (_401 || _403) {
     return (
@@ -27,7 +27,7 @@ export default function PanelAggregator() {
             <Link to={"/"} className="text-blue-400">Return Home</Link>
           </div>
         </div>
-        {_403 && !!authContext.claims?.feedAllow && <p className="pt-3">This <u className="decoration-wavy decoration-1 underline-offset-4 decoration-red-500">device</u> is not allowed to view the live feed</p>}
+        {_403 && !authContext.claims?.isAllowedThisDevice && <p className="pt-3">This <u className="decoration-wavy decoration-1 underline-offset-4 decoration-red-500">device</u> is not allowed to view the live feed</p>}
         <p className="flex flex-col text-xs text-gray-500 mt-3">
           Authority:
           <small className="text-xs text-gray-500">{authContext.user?.uid ?? "Not logged in"}</small>

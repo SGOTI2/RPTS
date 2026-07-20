@@ -22,7 +22,6 @@ export const AuthContext = createContext(providerlessContext)
 export const Auth = app ? getAuth(app) : app
 if (Auth) {
   setPersistence(Auth, browserLocalPersistence).then(() => {})
-  console.log(Auth.currentUser)
 }
 
 export function AuthProvider({ children }: { children: ReactNode }) {
@@ -33,7 +32,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   async function forceDataReload() {
     if (!user) return;
     
-    const userData = await getUserData(user.uid);
+    const userData = await getUserData(user.uid, true);
     
     setAllowedOnThisDevice(userData?.allowedDevices.indexOf(fingerprint) != -1);
   }

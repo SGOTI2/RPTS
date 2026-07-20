@@ -1,0 +1,11 @@
+import { Link } from "react-router";
+
+export default function Admin() {
+  return (
+    <div className="p-5">
+      <h1 className="text-3xl font-bold">Administration</h1>
+      <p className="text-gray-500 mb-5">This will allow you to access some functions not otherwise available to the rest of the team, admin/manager.py will allow you to modify access permissions for users other than device authorization.</p>
+      <Link to="/admin/deviceAuth" className="text-white p-2 px-3 rounded bg-blue-500">Authorize New Device</Link>
+    </div>
+  )
+}

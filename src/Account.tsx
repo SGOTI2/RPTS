@@ -6,7 +6,9 @@ import { AuthContext } from "./auth/AuthWrapper";
 import { MdCheckCircle, MdClose } from "react-icons/md";
 import { cnw } from "./lib/tailwindUtil";
 import { fingerprint } from "./auth/Fingerprinting";
-import { obfuscate } from "./Version";
+import { obfuscate } from "./panel/Version";
+import { Link } from "react-router";
+import DeviceQR from "./auth/DeviceQR";
 
 export default function Account() {
   const authContext = useContext(AuthContext);
@@ -28,11 +30,12 @@ export default function Account() {
             </h4>}
         </div>
         <div>
-          <p className="text-xs text-gray-500 text-end">
+          <p className="text-xs text-gray-500 md:text-end">
             {authContext.user?.uid ?? "Not logged in"}<br/>
             {obfuscate(fingerprint)}<br/>
             {authContext.claims?.verified ? 1 : 0}
             {authContext.claims?.feedAllow ? 1 : 0}
+            {authContext.isAllowedThisDevice ? 1 : 0}
           </p>
         </div>
       </div>
@@ -41,6 +44,16 @@ export default function Account() {
         <SignIn />
         <Logout />
         <ReloadData />
+        {!!authContext.claims?.admin && (
+          <div className="inline-flex">
+            <Link to="/admin" className="text-white p-2 px-3 rounded bg-red-500">To Admin</Link>
+          </div>
+        )}
+        <div className="inline-flex">
+          <div className="bg-white p-5 rounded">
+            <DeviceQR />
+          </div>
+        </div>
       </div>
     </div>
   )

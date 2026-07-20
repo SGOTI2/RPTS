@@ -13,6 +13,9 @@ import TaskAdder from './TaskAdder.tsx';
 import NotFound from './NotFound.tsx';
 import AuthWrapper from './auth/AuthWrapper.tsx';
 import Account from './Account.tsx';
+import AdminGate from './admin/AdminGate.tsx';
+import DeviceAuth from './admin/DeviceAuth.tsx';
+import Admin from './admin/Admin.tsx';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
@@ -26,6 +29,10 @@ createRoot(document.getElementById('root')!).render(
                 <Route element={<NavbarWrapper />}>
                   <Route path="/addTask" element={<TaskAdder />}/>
                   <Route path="/account" element={<Account />}/>
+                  <Route path="/admin" element={<AdminGate />}>
+                    <Route path="" element={<Admin />}/>
+                    <Route path="deviceAuth" element={<DeviceAuth />}/>
+                  </Route>
                 </Route>
                 <Route path="/" element={<Home />}/>
                 <Route path="/livefeed" element={<PanelAggregator />}/>
