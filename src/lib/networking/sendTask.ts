@@ -1,4 +1,4 @@
-import { addDoc, collection, Timestamp } from "firebase/firestore";
+import { addDoc, collection, doc, setDoc, Timestamp } from "firebase/firestore";
 import { db } from "./firebase";
 
 export type TaskData = {
@@ -12,5 +12,5 @@ export type TaskData = {
 }
 
 export default async function sendTask(fscn: string, data: TaskData) {
-  await addDoc(collection(db!, fscn), data);
+  await setDoc(doc(db!, fscn, data.pid.toString()), data);
 }

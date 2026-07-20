@@ -26,7 +26,7 @@ export default function Time() {
   }, []);
 
   return (<>
-    <h3 className="text-xl" ref={dateRef}></h3>
-    <h1 className="text-5xl" ref={timeRef}></h1>
+    <h3 className="text-base md:text-xl" ref={dateRef}></h3>
+    <h1 className="text-3xl md:text-5xl" ref={timeRef}></h1>
   </>)
 }

@@ -13,6 +13,6 @@ export default function PartCounter() {
   const feedManger = useContext(FeedManager);
 
   return (
-    <h2 className="text-5xl">{sum(Object.values(feedManger.feeds).map((feed) => feed.data.length))}</h2>
+    <h2 className="text-3xl md:text-5xl">{sum(Object.values(feedManger.feeds).map((feed) => feed.data.length))}</h2>
   );
 }

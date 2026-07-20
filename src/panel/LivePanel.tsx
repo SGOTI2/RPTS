@@ -26,10 +26,10 @@ export default function LivePanel({ fscn }: { fscn: string }) {
 
   return (
     <div
-      className="rounded border border-gray-700 bg-gray-800 py-5 px-4 min-w-xl w-full min-h-64 shadow-[8px_8px_0px] shadow-gray-950/40 inline-flex flex-col overflow-hidden"
+      className="rounded border border-gray-700 bg-gray-800 py-5 px-4 lg:min-w-xl w-full min-h-64 shadow-[8px_8px_0px] shadow-gray-950/40 inline-flex flex-col overflow-hidden"
       style={{ fontFamily: "JetBrains Mono" }}
     >
-      <h4 className="text-3xl font-bold">{unifiedStaticState.fscnMapping[fscn]}</h4>
+      <h4 className="text-lg lg:text-3xl font-bold">{unifiedStaticState.fscnMapping[fscn]}</h4>
       <div className="flex-1 relative overflow-hidden mt-3">
         {(!feedManager.feeds[fscn]            && (<LivePanelError>FSCN "{fscn}" does not have a feed in feedManager</LivePanelError>)) ||
         (feedManager.feeds[fscn].isAcquiring && (<LivePanelError>Acquiring Live Feed</LivePanelError>)) ||
@@ -40,12 +40,12 @@ export default function LivePanel({ fscn }: { fscn: string }) {
               <thead className="table-header-group h-8 sticky top-0 z-10">
                 <tr>
                   <th className="border border-gray-700 bg-gray-800 py-1 ps-2 w-32">Status</th>
-                  <th className="border border-gray-700 bg-gray-800 py-1 ps-2">Name</th>
-                  <th className="border border-gray-700 bg-gray-800 py-1 ps-2">Subteam</th>
+                  <th className="border border-gray-700 bg-gray-800 py-1 ps-2 w-32 lg:w-auto">Name</th>
+                  <th className="border border-gray-700 bg-gray-800 py-1 ps-2 w-32 lg:w-auto">Subteam</th>
                   <th className="border border-gray-700 bg-gray-800 py-1 ps-2 w-24">Priority</th>
                   <th className="border border-gray-700 bg-gray-800 py-1 ps-2 w-14">Part</th>
                   <th className="border border-gray-700 bg-gray-800 py-1 ps-2 w-12">QTY</th>
-                  <th className="border border-gray-700 bg-gray-800 py-1 ps-2">Due</th>
+                  <th className="border border-gray-700 bg-gray-800 py-1 ps-2 w-32 lg:w-auto">Due</th>
                 </tr>
               </thead>
               <tbody>

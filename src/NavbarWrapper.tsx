@@ -3,7 +3,7 @@ import Navbar from "./Navbar";
 
 export default function NavbarWrapper() {
   return <>
-    <Navbar className="m-3 mb-0 me-auto" />
+    <Navbar className="m-3 ms-auto sm:ms-3 mb-0 me-auto" />
     <Outlet />
   </>
 }

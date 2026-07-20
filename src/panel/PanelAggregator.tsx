@@ -44,11 +44,11 @@ export default function PanelAggregator() {
         <div className="flex-1 pt-5">
           <Time />
         </div>
-        <small className="flex-1 text-center text-gray-500 pt-1">
+        <small className="flex-1 text-center text-gray-500 pt-1 hidden lg:block">
           RPTS <Version />
         </small>
         <div className="flex-1 text-right pt-5">
-          <h3 className="text-xl">Parts</h3>
+          <h3 className="text-base md:text-xl">Parts</h3>
           <PartCounter />
         </div>
       </div>

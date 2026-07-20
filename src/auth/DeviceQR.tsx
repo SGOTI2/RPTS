@@ -7,7 +7,6 @@ import AESPassword from './aesPassword';
 
 export default function DeviceQR() {
   const authContext = useContext(AuthContext);
-  if (!authContext.user) return <></>;
   return (
     <>
       <p className='text-black pb-2'>{AESPassword.slice(-6, -3) + " " + AESPassword.slice(-3)}</p>

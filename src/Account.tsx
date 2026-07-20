@@ -49,11 +49,13 @@ export default function Account() {
             <Link to="/admin" className="text-white p-2 px-3 rounded bg-red-500">To Admin</Link>
           </div>
         )}
-        <div className="inline-flex">
-          <div className="bg-white p-5 rounded">
-            <DeviceQR />
+        {authContext.user && (
+          <div className="inline-flex">
+            <div className="bg-white p-5 pt-3 rounded origin-bottom-left rotate-90 -translate-y-full md:translate-y-0 md:rotate-0">
+              <DeviceQR />
+            </div>
           </div>
-        </div>
+        )}
       </div>
     </div>
   )
