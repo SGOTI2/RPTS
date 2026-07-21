@@ -12,11 +12,11 @@ type ContextType = {
 
 const providerlessContext: ContextType = {subteamMapping: {}, fscn: [], fscnMapping: {}}
 
-export const UnifiedStaticState = createContext(providerlessContext)
+export const UnifiedStaticData = createContext(providerlessContext)
 
-export function UnifiedStaticStateProvider({ children }: { children: ReactNode }) {
+export function UnifiedStaticDataProvider({ children }: { children: ReactNode }) {
   return (
-    <UnifiedStaticState value={{
+    <UnifiedStaticData value={{
       subteamMapping: {
         0: "Drive Base",
         1: "Shooter",
@@ -35,6 +35,6 @@ export function UnifiedStaticStateProvider({ children }: { children: ReactNode }
       }
     }}>
       {children}
-    </UnifiedStaticState>
+    </UnifiedStaticData>
   )
 }

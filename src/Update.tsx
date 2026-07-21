@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import { TaskStatus } from "./lib/Task";
 import { separateByCamelCase } from "./lib/util";
-import { UnifiedStaticState } from "./lib/unifiedStaticState";
+import { UnifiedStaticData } from "./lib/unifiedStaticState";
 import { produce } from "immer";
 import { FirestoreError } from "firebase/firestore";
 import { quickUpdateTask, type QuickTaskData } from "./lib/networking/updateTask";
@@ -23,7 +23,7 @@ const initialForm: FormData = {
 };
 
 export default function Update() {
-  const unifiedStaticState = useContext(UnifiedStaticState);
+  const unifiedStaticState = useContext(UnifiedStaticData);
 
   const [form, setForm] = useState<FormData>(initialForm);
   const [errors, setErrors] = useState<ValidationErrors>({});

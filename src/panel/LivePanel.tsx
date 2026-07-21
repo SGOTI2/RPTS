@@ -3,7 +3,7 @@ import { type Task } from "../lib/Task";
 import Cell from "./Cell";
 import { FeedManager } from "../lib/feedManager";
 import { MdWarning } from "react-icons/md";
-import { UnifiedStaticState } from "../lib/unifiedStaticState";
+import { UnifiedStaticData } from "../lib/unifiedStaticState";
 
 function LivePanelError({ children }: { children: ReactNode }) {
   return (
@@ -15,7 +15,7 @@ function LivePanelError({ children }: { children: ReactNode }) {
 }
 
 export default function LivePanel({ fscn }: { fscn: string }) {
-  const unifiedStaticState = useContext(UnifiedStaticState);
+  const unifiedStaticState = useContext(UnifiedStaticData);
   const feedManager = useContext(FeedManager)
 
   useEffect((() => {

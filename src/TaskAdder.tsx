@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import { TaskPriority, TaskStatus } from "./lib/Task";
 import { separateByCamelCase } from "./lib/util";
-import { UnifiedStaticState } from "./lib/unifiedStaticState";
+import { UnifiedStaticData } from "./lib/unifiedStaticState";
 import { produce } from "immer";
 import type { TaskData } from "./lib/networking/sendTask";
 import sendTask from "./lib/networking/sendTask";
@@ -35,7 +35,7 @@ const initialForm: FormData = {
 };
 
 export default function TaskAdder() {
-  const unifiedStaticState = useContext(UnifiedStaticState);
+  const unifiedStaticState = useContext(UnifiedStaticData);
 
   const [form, setForm] = useState<FormData>(initialForm);
   const [errors, setErrors] = useState<ValidationErrors>({});

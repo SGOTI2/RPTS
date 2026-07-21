@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import Version, { obfuscate } from "./Version";
 import LivePanel from "./LivePanel";
-import { UnifiedStaticState } from "../lib/unifiedStaticState";
+import { UnifiedStaticData } from "../lib/unifiedStaticState";
 import Time from "./Time";
 import PartCounter from "./PartCounter";
 import { AuthContext } from "../auth/AuthWrapper";
@@ -10,7 +10,7 @@ import { fingerprint } from "../auth/Fingerprinting";
 
 export default function PanelAggregator() {
   const authContext = useContext(AuthContext);
-  const unifiedStaticState = useContext(UnifiedStaticState);
+  const unifiedStaticState = useContext(UnifiedStaticData);
 
   const _401 = !authContext.user;
   const _403 = authContext.user && (!authContext.claims?.feedAllow || !authContext.claims?.verified || !authContext.isAllowedThisDevice);

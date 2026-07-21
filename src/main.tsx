@@ -6,7 +6,7 @@ import NavbarWrapper from './NavbarWrapper';
 import Home from './Home';
 import PanelAggregator from './panel/PanelAggregator';
 import './font.ts';
-import { UnifiedStaticStateProvider } from './lib/unifiedStaticState.tsx';
+import { UnifiedStaticDataProvider } from './lib/unifiedStaticState.tsx';
 import { isValidated } from './lib/networking/firebase.ts';
 import { FeedManagerProvider } from './lib/feedManager.tsx';
 import TaskAdder from './TaskAdder.tsx';
@@ -21,7 +21,7 @@ import Update from './Update.tsx';
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     {isValidated ? (
-      <UnifiedStaticStateProvider>
+      <UnifiedStaticDataProvider>
         <AuthWrapper>
           <FeedManagerProvider>
             <BrowserRouter>
@@ -42,7 +42,7 @@ createRoot(document.getElementById('root')!).render(
             </BrowserRouter>
           </FeedManagerProvider>
         </AuthWrapper>
-      </UnifiedStaticStateProvider>
+      </UnifiedStaticDataProvider>
     ) : (
       <h1 className="m-auto text-3xl p-32 leading-8">
         You need to setup firebase to use this project<br/>
