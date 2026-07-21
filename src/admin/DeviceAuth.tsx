@@ -4,6 +4,7 @@ import CryptoJS from "crypto-js";
 import AESPassword from '../auth/aesPassword';
 import { obfuscate } from '../panel/Version';
 import { addDeviceAuth } from '../lib/networking/addDeviceAuth';
+import { fingerprint } from '../auth/Fingerprinting';
 
 type DeviceQRData = {
   uid: string,
@@ -29,6 +30,10 @@ export default function DeviceAuth() {
                   const data = raw_data.toString(CryptoJS.enc.Utf8);
                   const parts = data.split("&&");
                   if (parts.length < 2) return;
+                  if (parts[1].match(/^[0-9A-F]{8}-[0-9A-F]{4}-[4][0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i) == null) {
+                    console.log("UFID failure")
+                    return;  
+                  }
                   setDevice({
                     uid: parts[0],
                     fingerprint: parts[1],
