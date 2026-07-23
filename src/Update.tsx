@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import { TaskStatus } from "./lib/Task";
 import { separateByCamelCase } from "./lib/util";
-import { UnifiedStaticData } from "./lib/unifiedStaticState";
+import { UnifiedStaticData } from "./lib/unifiedStaticData";
 import { produce } from "immer";
 import { FirestoreError } from "firebase/firestore";
 import { quickUpdateTask, type QuickTaskData } from "./lib/networking/updateTask";

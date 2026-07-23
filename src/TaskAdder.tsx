@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import { TaskPriority, TaskStatus } from "./lib/Task";
 import { separateByCamelCase } from "./lib/util";
-import { UnifiedStaticData } from "./lib/unifiedStaticState";
+import { UnifiedStaticData } from "./lib/unifiedStaticData";
 import { produce } from "immer";
 import type { TaskData } from "./lib/networking/sendTask";
 import sendTask from "./lib/networking/sendTask";

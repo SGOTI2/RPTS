@@ -5,7 +5,7 @@ import { cnw } from "../lib/tailwindUtil";
 import { pseudoEnumName } from "../lib/util";
 import './cellStyles.css'
 import useOverflow from "./useOverflow";
-import { UnifiedStaticData } from "../lib/unifiedStaticState";
+import { UnifiedStaticData } from "../lib/unifiedStaticData";
 
 // DataKey represents the key in `task` that this cell represents
 export default function Cell({ task, dataKey }: { task: Task, dataKey: keyof Task }) {

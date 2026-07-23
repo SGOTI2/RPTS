@@ -44,6 +44,9 @@ export default function Account() {
         <SignIn />
         <Logout />
         <ReloadData />
+        <div className="inline-flex">
+          <Link to="/USD_Patcher" className="text-black p-2 px-3 rounded bg-white">USD Patcher</Link>
+        </div>
         {!!authContext.claims?.admin && (
           <div className="inline-flex">
             <Link to="/admin" className="text-white p-2 px-3 rounded bg-red-500">To Admin</Link>

@@ -1,2 +1,2 @@
 Start-Process -FilePath 'code' -ArgumentList '.' 
-& npm run dev -- --host --clearScreen false
+& npm run dev -- --host --clearScreen false -l info

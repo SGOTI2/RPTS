@@ -27,3 +27,6 @@ dist-ssr
 
 *.json
 *.enc
+*.pem
+USD.cfg.ts
+src/PUBLIC_KEY.ts

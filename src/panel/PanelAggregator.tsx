@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import Version, { obfuscate } from "./Version";
 import LivePanel from "./LivePanel";
-import { UnifiedStaticData } from "../lib/unifiedStaticState";
+import { UnifiedStaticData } from "../lib/unifiedStaticData";
 import Time from "./Time";
 import PartCounter from "./PartCounter";
 import { AuthContext } from "../auth/AuthWrapper";

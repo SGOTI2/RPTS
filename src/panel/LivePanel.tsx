@@ -3,7 +3,7 @@ import { type Task } from "../lib/Task";
 import Cell from "./Cell";
 import { FeedManager } from "../lib/feedManager";
 import { MdWarning } from "react-icons/md";
-import { UnifiedStaticData } from "../lib/unifiedStaticState";
+import { UnifiedStaticData } from "../lib/unifiedStaticData";
 
 function LivePanelError({ children }: { children: ReactNode }) {
   return (

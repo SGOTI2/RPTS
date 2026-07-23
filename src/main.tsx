@@ -6,7 +6,7 @@ import NavbarWrapper from './NavbarWrapper';
 import Home from './Home';
 import PanelAggregator from './panel/PanelAggregator';
 import './font.ts';
-import { UnifiedStaticDataProvider } from './lib/unifiedStaticState.tsx';
+import { UnifiedStaticDataProvider } from './lib/unifiedStaticData.tsx';
 import { isValidated } from './lib/networking/firebase.ts';
 import { FeedManagerProvider } from './lib/feedManager.tsx';
 import TaskAdder from './TaskAdder.tsx';
@@ -17,6 +17,8 @@ import AdminGate from './admin/AdminGate.tsx';
 import DeviceAuth from './admin/DeviceAuth.tsx';
 import Admin from './admin/Admin.tsx';
 import Update from './Update.tsx';
+import UnifiedStaticDataUpdater from './USD_Updater.tsx';
+import UnifiedStaticDataCreator from './admin/USD_Creator.tsx';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
@@ -31,9 +33,11 @@ createRoot(document.getElementById('root')!).render(
                   <Route path="/addTask" element={<TaskAdder />}/>
                   <Route path="/account" element={<Account />}/>
                   <Route path="/update" element={<Update />}/>
+                  <Route path="/USD_Patcher" element={<UnifiedStaticDataUpdater />}/>
                   <Route path="/admin" element={<AdminGate />}>
                     <Route path="" element={<Admin />}/>
                     <Route path="deviceAuth" element={<DeviceAuth />}/>
+                    <Route path="USD_Creator" element={<UnifiedStaticDataCreator />}/>
                   </Route>
                 </Route>
                 <Route path="/" element={<Home />}/>
