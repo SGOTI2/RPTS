@@ -4,7 +4,6 @@ import CryptoJS from "crypto-js";
 import AESPassword from '../auth/aesPassword';
 import { obfuscate } from '../panel/Version';
 import { addDeviceAuth } from '../lib/networking/addDeviceAuth';
-import { fingerprint } from '../auth/Fingerprinting';
 
 type DeviceQRData = {
   uid: string,

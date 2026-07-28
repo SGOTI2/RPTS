@@ -1,10 +1,11 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { TaskStatus } from "./lib/Task";
 import { separateByCamelCase } from "./lib/util";
 import { UnifiedStaticData } from "./lib/unifiedStaticData";
 import { produce } from "immer";
 import { FirestoreError } from "firebase/firestore";
 import { quickUpdateTask, type QuickTaskData } from "./lib/networking/updateTask";
+import { Link, redirect, useLocation, useSearchParams } from "react-router";
 
 const statusOptions = Object.keys(TaskStatus).map((v) => separateByCamelCase(v));
 
@@ -22,7 +23,8 @@ const initialForm: FormData = {
   fscn: ""
 };
 
-export default function Update() {
+export default function QuickUpdate() {
+  const [searchParams] = useSearchParams({ p: "", f: "" });
   const unifiedStaticState = useContext(UnifiedStaticData);
 
   const [form, setForm] = useState<FormData>(initialForm);
@@ -90,6 +92,14 @@ export default function Update() {
 
     setForm(initialForm);
   }
+
+  useEffect(() => {
+    updateField("part", searchParams.get("p") ?? "");
+    const supposedFSCN = searchParams.get("f") ?? "";
+    if (unifiedStaticState.fscn.find((k) => k == supposedFSCN)) {
+      updateField("fscn", supposedFSCN);
+    }
+  }, [searchParams]);
 
   const inputStyle =
     "bg-gray-900 px-3 py-2 border rounded border-gray-800 placeholder-gray-500 outline-none focus:border-blue-500 w-full";
@@ -166,34 +176,43 @@ export default function Update() {
         </div>
 
         <div className="md:col-span-2">
-          <button
-            type="submit"
-            disabled={loading}
-            className="inline-flex items-center rounded-lg bg-blue-600 px-5 py-2.5 font-medium text-white transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-60"
-          >
-            Update
+          <div className="flex gap-3">
+            <button
+              type="submit"
+              disabled={loading}
+              className="inline-flex items-center rounded-lg bg-blue-600 px-5 py-2.5 font-medium text-white transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-60"
+            >
+              Update
 
-            {loading && (
-              <svg
-                className="ml-3 h-5 w-5 animate-spin"
-                viewBox="0 0 24 24"
-                fill="none"
-              >
-                <circle
-                  cx="12"
-                  cy="12"
-                  r="10"
-                  stroke="currentColor"
-                  strokeWidth="4"
-                  className="opacity-20"
-                />
-                <path
-                  fill="currentColor"
-                  d="M22 12a10 10 0 00-10-10v4a6 6 0 016 6h4z"
-                />
-              </svg>
-            )}
-          </button>
+              {loading && (
+                <svg
+                  className="ml-3 h-5 w-5 animate-spin"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                >
+                  <circle
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    stroke="currentColor"
+                    strokeWidth="4"
+                    className="opacity-20"
+                  />
+                  <path
+                    fill="currentColor"
+                    d="M22 12a10 10 0 00-10-10v4a6 6 0 016 6h4z"
+                  />
+                </svg>
+              )}
+            </button>
+            <Link
+              to="/fullUpdate"
+              role="button"
+              className="inline-flex items-center rounded-lg bg-blue-600 px-5 py-2.5 font-medium text-white transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-60"
+            >
+              More Options
+            </Link>
+          </div>
           {err && <p className="mt-1 text-red-500 font-medium text-sm">{err}</p>}
         </div>
       </form>

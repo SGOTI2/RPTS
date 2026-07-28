@@ -5,7 +5,8 @@ import { UnifiedStaticData } from "./lib/unifiedStaticData";
 import { produce } from "immer";
 import type { TaskData } from "./lib/networking/sendTask";
 import sendTask from "./lib/networking/sendTask";
-import { Timestamp } from "firebase/firestore";
+import { FirestoreError, Timestamp } from "firebase/firestore";
+import { fullUpdateTask, quickUpdateTask } from "./lib/networking/updateTask";
 
 const statusOptions = Object.keys(TaskStatus).map((v) => separateByCamelCase(v));
 const priorityOptions = Object.keys(TaskPriority).map((v) => separateByCamelCase(v));
@@ -40,6 +41,8 @@ export default function TaskAdder() {
   const [form, setForm] = useState<FormData>(initialForm);
   const [errors, setErrors] = useState<ValidationErrors>({});
   const [loading, setLoading] = useState(false);
+  const [err, setErr] = useState<string | null>();
+  const [eligibleForAdd, setEligibleForAdd] = useState<boolean>(false);
 
   function updateField<K extends keyof FormData>(
     key: K,
@@ -48,6 +51,9 @@ export default function TaskAdder() {
     setForm(produce((draft) => {
       draft[key] = value;
     }));
+    if (key == "part" || key == "fscn") {
+      setEligibleForAdd(false);
+    }
   }
 
   function validate(values: FormData): ValidationErrors {
@@ -86,7 +92,8 @@ export default function TaskAdder() {
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-
+    
+    setErr(null);
     const validation = validate(form);
     setErrors(validation);
 
@@ -107,12 +114,24 @@ export default function TaskAdder() {
     setLoading(true);
 
     try {
-      await sendTask(form.fscn.trim(), data);
+      if (eligibleForAdd) {
+        await sendTask(form.fscn.trim(), data);
+        setForm(initialForm);
+      } else {
+        await fullUpdateTask(form.fscn.trim(), data);
+      }
+    } catch (e: any) {
+      if ((e as FirestoreError).code == "not-found") {
+        setErr("That part number does not exist for the selected manufacturer")
+        setEligibleForAdd(true);
+      } else {
+        setErr((e as FirestoreError).code);
+      }
+      setLoading(false);
+      return;
     } finally {
       setLoading(false);
     }
-
-    setForm(initialForm);
   }
 
   const inputStyle =
@@ -128,7 +147,7 @@ export default function TaskAdder() {
   return (
     <div className="flex-1 p-5">
       <h2 className="mb-6 text-3xl font-bold tracking-wide">
-        Task Adder 2000
+        Update Task (Extended)
       </h2>
 
       <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3">
@@ -281,7 +300,7 @@ export default function TaskAdder() {
             disabled={loading}
             className="inline-flex items-center rounded-lg bg-blue-600 px-5 py-2.5 font-medium text-white transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-60"
           >
-            Submit
+            {eligibleForAdd ? "Add Instead" : "Update"}
 
             {loading && (
               <svg
@@ -304,6 +323,7 @@ export default function TaskAdder() {
               </svg>
             )}
           </button>
+          {err && <p className="mt-1 text-red-500 font-medium text-sm">{err}</p>}
         </div>
       </form>
     </div>
