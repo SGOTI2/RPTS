@@ -1,6 +1,6 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-import { BrowserRouter, Routes, Route } from "react-router";
+import { BrowserRouter, Routes, Route, HashRouter } from "react-router";
 import './index.css'
 import NavbarWrapper from './NavbarWrapper';
 import Home from './Home';
@@ -27,7 +27,7 @@ createRoot(document.getElementById('root')!).render(
       <UnifiedStaticDataProvider>
         <AuthWrapper>
           <FeedManagerProvider>
-            <BrowserRouter>
+            <HashRouter>
               <Routes>
                 <Route path='*' element={<NotFound />} />
                 <Route element={<NavbarWrapper />}>
@@ -45,7 +45,7 @@ createRoot(document.getElementById('root')!).render(
                 <Route path="/" element={<Home />}/>
                 <Route path="/livefeed" element={<PanelAggregator />}/>
               </Routes>
-            </BrowserRouter>
+            </HashRouter>
           </FeedManagerProvider>
         </AuthWrapper>
       </UnifiedStaticDataProvider>

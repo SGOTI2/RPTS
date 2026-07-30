@@ -5,6 +5,7 @@ import tailwindcss from '@tailwindcss/vite'
 import { execSync } from 'node:child_process';
 import { existsSync } from "node:fs";
 import { resolve } from "node:path";
+import { viteSingleFile } from "vite-plugin-singlefile";
 
 const configFile = existsSync(resolve("config.local.ts"))
   ? resolve("config.local.ts")
@@ -20,7 +21,8 @@ export default defineConfig({
   plugins: [
     react(),
     tailwindcss(),
-    babel({ presets: [reactCompilerPreset()] })
+    babel({ presets: [reactCompilerPreset()] }),
+    viteSingleFile()
   ],
   define: {
     __BUILD_TIME__: JSON.stringify(new Date().getTime()),
